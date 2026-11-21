@@ -6,7 +6,7 @@ registry inside an airgapped AWS environment.
 
 ## Problem
 
-GovTech [CLOUD_ENV] AWS blocks public ECR (`public.ecr.aws`) for VPC-attached
+[CLOUD_ENV] AWS blocks public ECR (`public.ecr.aws`) for VPC-attached
 resources. ECS Fargate task definitions must pull sidecar images from private
 ECR. Without automation, every Trend Micro release requires a manual
 CloudShell mirroring run.
@@ -52,7 +52,7 @@ diagram/                            Architecture diagrams
 
 ## Deployment
 
-NHB deploys via the CloudFormation Console using a versioned public S3 template
+Deploys via the CloudFormation Console using a versioned public S3 template
 URL. No AWS CLI or SAM CLI required in the target account.
 
 See [`lambda/CUSTOMER_CONSOLE_DEPLOYMENT.md`](lambda/CUSTOMER_CONSOLE_DEPLOYMENT.md)

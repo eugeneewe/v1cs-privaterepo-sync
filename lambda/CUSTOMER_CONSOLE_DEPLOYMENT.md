@@ -68,7 +68,7 @@ release, and documentation files are not deployed to the customer account.
 Run from the `lambda/` directory after the version has passed POC validation:
 
 ```bash
-RELEASE_VERSION=2026.08.26 ./release-public-template.sh
+RELEASE_VERSION=2026.11.21 ./release-public-template.sh
 ```
 
 The script packages the Lambda with AWS CLI, uploads a versioned template and
