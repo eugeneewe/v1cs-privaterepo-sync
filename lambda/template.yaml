@@ -1,0 +1,263 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Weekly sync of Trend Micro Vision One Container Security ECS sidecar images
+  (cloud-falco, cloud-scout, cloud-pdig, cloud-scan-job)
+  from the public ECR gallery (public.ecr.aws/trendmicro/container-security)
+  into THIS account's private ECR, preserving exact digests.
+  Note: aws-security-manager is a Lambda Container Image managed by Trend Micro's
+  own CodeBuild pipeline and is NOT synced here.
+
+Parameters:
+  PrivateRegion:
+    Type: String
+    Description: Region of the private ECR registry
+    Default: ap-southeast-1
+
+  PublicNamespace:
+    Type: String
+    Description: Gallery namespace path (public part of the image repo)
+    Default: trendmicro/container-security
+
+  DstPrefix:
+    Type: String
+    Description: >
+      Prefix for the private repo name, mirroring the public path.
+      E.g. trendmicro/container-security -> repo trendmicro/container-security/cloud-falco
+    Default: trendmicro/container-security
+
+  ImageTagsKeepCount:
+    Type: Number
+    Description: Number of newest versions to keep per image (latest plus four prior versions)
+    Default: 5
+    MinValue: 1
+    MaxValue: 10
+
+  EnablePrune:
+    Type: String
+    Description: Set true to delete numeric tags older than the keep-window
+    AllowedValues: ["true", "false"]
+    Default: "true"
+
+  ProxyUrl:
+    Type: String
+    Description: >
+      [CLOUD_ENV] HTTPS proxy endpoint (reachable via its VPCe), e.g.
+      https://proxy.xxx.gov.sg:port  - must be reachable from the Lambda VPC.
+      Leave as an empty string ONLY if a NAT gateway is used instead.
+    Default: ""
+
+  VpcSubnetIds:
+    Type: String
+    Description: >
+      Comma-separated private subnet IDs for the Lambda (with route to VPCe/private link).
+      Leave EMPTY to run the Lambda WITHOUT a VPC (direct egress, like CloudShell - no proxy needed).
+    Default: ""
+
+  VpcSecurityGroupIds:
+    Type: String
+    Description: >
+      Comma-separated security group IDs for the Lambda. Required if VpcSubnetIds is set.
+    Default: ""
+
+  ScheduleCron:
+    Type: String
+    Description: EventBridge Scheduler expression (cron, rate, or one-time at expression)
+    Default: "cron(0 2 ? * SUN *)"
+
+  ScheduleTimeZone:
+    Type: String
+    Description: IANA time zone used to evaluate the scheduler expression (GMT+8)
+    Default: Asia/Singapore
+
+  ScheduleState:
+    Type: String
+    Description: Enable or disable the weekly EventBridge Scheduler trigger
+    AllowedValues: [ENABLED, DISABLED]
+    Default: ENABLED
+
+  SnsTopicArn:
+    Type: String
+    Description: Optional SNS topic to notify on sync results (empty = disabled)
+    Default: ""
+
+  EcsClusterTag:
+    Type: String
+    Description: Optional free-text cluster context included in SNS payloads
+    Default: ""
+
+Conditions:
+  HasSns: !Not [!Equals [!Ref SnsTopicArn, ""]]
+  HasProxy: !Not [!Equals [!Ref ProxyUrl, ""]]
+  HasVpc: !Not [!Equals [!Ref VpcSubnetIds, ""]]
+
+Resources:
+  # ------------------------------------------------------------------
+  # Lambda: the weekly sync worker
+  # ------------------------------------------------------------------
+  SyncFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      # Package only the runtime source. Operator scripts and customer
+      # documentation remain outside the Lambda deployment artifact.
+      CodeUri: runtime/
+      Handler: v1cs-sync-lambda.handler
+      Runtime: python3.14
+      Architectures: [x86_64]
+      Timeout: 900
+      MemorySize: 1024
+      EphemeralStorage:
+        Size: 10240
+      VpcConfig: !If
+        - HasVpc
+        - SubnetIds: !Split [",", !Ref VpcSubnetIds]
+          SecurityGroupIds: !Split [",", !Ref VpcSecurityGroupIds]
+        - !Ref "AWS::NoValue"
+      Environment:
+        Variables:
+          PUBLIC_REGISTRY: public.ecr.aws
+          PUBLIC_NAMESPACE: !Ref PublicNamespace
+          IMAGES: cloud-falco,cloud-scout,cloud-pdig,cloud-scan-job
+          DST_PREFIX: !Ref DstPrefix
+          KEEP_VERSIONS: !Ref ImageTagsKeepCount
+          ENABLE_PRUNE: !Ref EnablePrune
+          PRIVATE_REGION: !Ref PrivateRegion
+          PRIVATE_ACCOUNT_ID: !Ref AWS::AccountId
+          HTTPS_PROXY: !Ref ProxyUrl
+          # Private ECR + AWS APIs go DIRECT via VPC endpoints, never via proxy.
+          NO_PROXY: !Sub "${AWS::AccountId}.dkr.ecr.${PrivateRegion}.amazonaws.com,.amazonaws.com"
+          SNS_TOPIC_ARN: !Ref SnsTopicArn
+          ECS_CLUSTER_TAG: !Ref EcsClusterTag
+          RESOURCE_TAG_OWNER: trend micro
+          RESOURCE_TAG_PURPOSE: V1CS self-manage repo sync
+      Policies:
+        - Statement:
+            - Sid: EcrSync
+              Effect: Allow
+              Action:
+                - ecr:GetAuthorizationToken
+                - ecr:CreateRepository
+                - ecr:DescribeRepositories
+                - ecr:DescribeImages
+                - ecr:BatchDeleteImage
+                - ecr:PutImage
+                - ecr:InitiateLayerUpload
+                - ecr:UploadLayerPart
+                - ecr:CompleteLayerUpload
+                - ecr:BatchGetImage
+                - ecr:TagResource
+              Resource: "*"
+            - Sid: MetricsAndLogs
+              Effect: Allow
+              Action:
+                - cloudwatch:PutMetricData
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+              Resource: "*"
+            - !If
+              - HasSns
+              - Sid: PublishSns
+                Effect: Allow
+                Action:
+                  - sns:Publish
+                Resource: !Ref SnsTopicArn
+              - !Ref "AWS::NoValue"
+      Tags:
+        owner: trendmicro
+        purpose: V1CS self-manage repo sync
+
+  SyncFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${SyncFunction}"
+      Tags:
+        - Key: owner
+          Value: trendmicro
+        - Key: purpose
+          Value: V1CS self-manage repo sync
+
+  # ------------------------------------------------------------------
+  # EventBridge Scheduler: weekly trigger
+  # ------------------------------------------------------------------
+  SchedulerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: scheduler.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: invoke-sync-function
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: lambda:InvokeFunction
+                Resource: !GetAtt SyncFunction.Arn
+      Tags:
+        - Key: owner
+          Value: trendmicro
+        - Key: purpose
+          Value: V1CS self-manage repo sync
+
+  SyncScheduleGroup:
+    Type: AWS::Scheduler::ScheduleGroup
+    Properties:
+      Name: TrendMicro-v1cs-privaterepo
+      Tags:
+        - Key: owner
+          Value: trendmicro
+        - Key: purpose
+          Value: V1CS self-manage repo sync
+
+  WeeklySyncSchedule:
+    Type: AWS::Scheduler::Schedule
+    Properties:
+      Name: TrendMicro-v1cs-privaterepo
+      GroupName: !Ref SyncScheduleGroup
+      ScheduleExpression: !Ref ScheduleCron
+      ScheduleExpressionTimezone: !Ref ScheduleTimeZone
+      FlexibleTimeWindow:
+        Mode: "OFF"
+      State: !Ref ScheduleState
+      Target:
+        Arn: !GetAtt SyncFunction.Arn
+        RoleArn: !GetAtt SchedulerRole.Arn
+
+  # ------------------------------------------------------------------
+  # CloudWatch alarm: any sync error within 1 week
+  # ------------------------------------------------------------------
+  SyncErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Condition: HasSns
+    Properties:
+      AlarmName: TrendMicro-v1cs-privaterepo-errors
+      AlarmDescription: "V1CS container security image sync reported errors"
+      Namespace: V1CS/ContainerSecurity
+      MetricName: SyncErrors
+      Statistic: Sum
+      Period: 3600
+      EvaluationPeriods: 1
+      Threshold: 0
+      ComparisonOperator: GreaterThanThreshold
+      TreatMissingData: notBreaching
+      ActionsEnabled: true
+      AlarmActions:
+        - !Ref SnsTopicArn
+      OKActions:
+        - !Ref SnsTopicArn
+      Tags:
+        - Key: owner
+          Value: trendmicro
+        - Key: purpose
+          Value: V1CS self-manage repo sync
+
+Outputs:
+  SyncFunctionName:
+    Value: !Ref SyncFunction
+  SyncFunctionArn:
+    Value: !GetAtt SyncFunction.Arn

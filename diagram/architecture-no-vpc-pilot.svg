@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">NHB Vision One Container Security weekly image sync – recommended no-VPC pilot</title>
+  <desc id="desc">EventBridge Scheduler invokes a Lambda without VPC configuration. The Lambda uses AWS-managed internet egress to read public ECR Gallery and writes three Trend Micro image repositories to private ECR in the same AWS account. Notifications are optional. One stack is deployed in each of four NHB accounts in ap-southeast-1.</desc>
+  <defs>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#172033} .h1{font-size:32px;font-weight:700}.h2{font-size:20px;font-weight:700}.body{font-size:17px}.small{font-size:14px}.tiny{font-size:12px}.box{fill:#fff;stroke:#61738b;stroke-width:2}.aws{fill:#fff7e9;stroke:#e8891b;stroke-width:2}.blue{fill:#edf6ff;stroke:#1479c9;stroke-width:2}.green{fill:#edf9f0;stroke:#218653;stroke-width:2}.amber{fill:#fff4df;stroke:#b86800;stroke-width:2}.note{fill:#f7f9fc;stroke:#9aabbe;stroke-width:1.5}.line{stroke:#334e68;stroke-width:3;fill:none;marker-end:url(#arrow)}.dash{stroke:#b86800;stroke-width:2.5;stroke-dasharray:8 7;fill:none;marker-end:url(#arrowamber)}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#334e68"/></marker>
+    <marker id="arrowamber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#b86800"/></marker>
+  </defs>
+  <rect width="1600" height="1000" fill="#f4f7fb"/>
+  <text x="70" y="65" class="h1">NHB Vision One Container Security — Weekly Sidecar Image Sync</text>
+  <text x="70" y="98" class="body">Recommended pilot: Lambda without VPC attachment • ap-southeast-1 • deploy one identical stack per NHB account</text>
+  <rect x="70" y="128" width="1460" height="610" rx="18" fill="#ffffff" stroke="#c2d2e3" stroke-width="2"/>
+  <text x="105" y="170" class="h2">One deployment stack in each account</text>
+  <text x="105" y="197" class="small">2 projects × PROD/UAT = 4 accounts. The diagram shows one account; repeat the same stack four times.</text>
+
+  <rect x="120" y="275" width="240" height="130" rx="14" class="blue"/>
+  <text x="150" y="320" class="h2">EventBridge Scheduler</text>
+  <text x="150" y="350" class="body">Weekly schedule</text>
+  <text x="150" y="378" class="small">Sunday 02:00 UTC</text>
+
+  <rect x="490" y="235" width="330" height="215" rx="14" class="aws"/>
+  <text x="535" y="280" class="h2">AWS Lambda sync function</text>
+  <text x="535" y="313" class="body">No VpcConfig</text>
+  <text x="535" y="344" class="small">• Select latest 4 numeric tags</text>
+  <text x="535" y="369" class="small">• Preserve OCI multi-arch digests</text>
+  <text x="535" y="394" class="small">• Sync + notify only</text>
+  <text x="535" y="423" class="tiny">No task-definition change by this solution</text>
+
+  <rect x="495" y="530" width="320" height="116" rx="14" class="green"/>
+  <text x="545" y="573" class="h2">AWS-managed egress</text>
+  <text x="545" y="603" class="body">No customer VPC route</text>
+  <text x="545" y="627" class="small">No IGW • no NAT • no proxy/VPCe</text>
+
+  <rect x="1010" y="226" width="400" height="140" rx="14" class="aws"/>
+  <text x="1045" y="271" class="h2">Public Amazon ECR Gallery</text>
+  <text x="1045" y="303" class="body">public.ecr.aws/trendmicro/</text>
+  <text x="1045" y="329" class="body">container-security/*</text>
+
+  <rect x="1000" y="485" width="420" height="175" rx="14" class="aws"/>
+  <text x="1035" y="530" class="h2">Private Amazon ECR</text>
+  <text x="1035" y="560" class="body">Same account • ap-southeast-1</text>
+  <text x="1035" y="591" class="small">trendmicro/container-security/cloud-falco</text>
+  <text x="1035" y="616" class="small">trendmicro/container-security/cloud-scout</text>
+  <text x="1035" y="641" class="small">trendmicro/container-security/cloud-pdig</text>
+
+  <path d="M360 340 H490" class="line"/>
+  <text x="385" y="325" class="small">Invoke</text>
+  <path d="M820 315 H1010" class="line"/>
+  <text x="852" y="298" class="small">Read tags, manifests, blobs</text>
+  <path d="M650 450 V530" class="line"/>
+  <path d="M815 590 H1000" class="line"/>
+  <text x="848" y="572" class="small">Write digest-exact images</text>
+
+  <rect x="120" y="505" width="240" height="144" rx="14" class="box"/>
+  <text x="150" y="548" class="h2">Observability</text>
+  <text x="150" y="580" class="body">CloudWatch Logs + metrics</text>
+  <text x="150" y="606" class="small">Optional CloudWatch alarm</text>
+  <text x="150" y="630" class="small">Optional SNS notification</text>
+  <path d="M490 420 C430 430 415 525 360 560" class="line"/>
+
+  <rect x="70" y="770" width="1460" height="165" rx="16" class="amber"/>
+  <text x="105" y="813" class="h2">Pilot gate before production rollout</text>
+  <text x="105" y="846" class="body">Confirm GovTech permits Lambda’s AWS-managed outbound path to public.ecr.aws. Run a controlled pilot in one UAT account.</text>
+  <text x="105" y="878" class="body">If that path is not approved, use the alternate in-VPC design: GovTech HTTPS proxy for public ECR + ECR API/DKR and S3 VPC endpoints.</text>
+  <text x="105" y="910" class="small">Customer CloudFormation consumes mirrored images and manages task-definition updates; this proposal only keeps private ECR current.</text>
+</svg>

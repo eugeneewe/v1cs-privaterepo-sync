@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# drawio backup files
+*.bkp
+.*.bkp
+
+# Generated archives
+*.zip
+
+# Temporary / local
+*.tmp
+*.log
+.env
+*.env
+
+# AI session debug logs (not project documentation)
+.learnings/
+
+# Lambda build artifacts (packaged by release script, not source)
+lambda/artifacts/
+v1cs-privaterepo-IaC/artifacts/

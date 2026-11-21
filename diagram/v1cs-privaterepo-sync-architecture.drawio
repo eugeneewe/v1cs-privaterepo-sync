@@ -1,0 +1,87 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="5A41mLmgqm37ZVUQ3XaU">
+    <mxGraphModel dx="1441" dy="1021" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="k0TlfemUR5bBmTbeQS8U-13" parent="1" style="rounded=1;arcSize=10;dashed=1;strokeColor=#F59D56;fillColor=none;gradientColor=none;dashPattern=8 4;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="263" width="508" x="-127" y="57" as="geometry" />
+        </mxCell>
+        <mxCell id="k0TlfemUR5bBmTbeQS8U-4" parent="1" style="rounded=1;arcSize=10;dashed=1;strokeColor=#F59D56;fillColor=none;gradientColor=none;dashPattern=8 4;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="350" width="1013" x="-125" y="339" as="geometry" />
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-3" edge="1" parent="1" source="BWlWesswxzaXjNaTNNdw-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=light-dark(#000000,#070F19);fontStyle=0;endArrow=none;endFill=0;strokeColor=#67AB9F;strokeWidth=2;flowAnimation=1;labelBackgroundColor=none;" target="BWlWesswxzaXjNaTNNdw-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-1" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=light-dark(#000000,#070F19);fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.eventbridge;fontFamily=CaskaydiaCove Nerd Font;labelBackgroundColor=none;" value="EventBridge Scheduler&lt;div&gt;Every Sunday 2AM&lt;/div&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="-52" y="388" as="geometry" />
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-8" edge="1" parent="1" source="BWlWesswxzaXjNaTNNdw-2" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#67AB9F;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=light-dark(#000000,#070F19);fontStyle=0;labelBackgroundColor=none;endArrow=none;endFill=0;flowAnimation=1;" target="BWlWesswxzaXjNaTNNdw-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-15" connectable="0" parent="BWlWesswxzaXjNaTNNdw-8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=light-dark(#000000,#070F19);fontStyle=0;labelBackgroundColor=default;" value="Upload Image" vertex="1">
+          <mxGeometry relative="1" x="-0.0806" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-4" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=light-dark(#000000,#070F19);fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ecr;fontFamily=CaskaydiaCove Nerd Font;labelPosition=center;labelBackgroundColor=none;" value="Public AWS ECR" vertex="1">
+          <mxGeometry height="78" width="78" x="467" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-6" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=light-dark(#000000,#070F19);fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ecr;fontFamily=CaskaydiaCove Nerd Font;labelBackgroundColor=none;" value="Private AWS ECR" vertex="1">
+          <mxGeometry height="78" width="78" x="467" y="388" as="geometry" />
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=light-dark(#000000,#070F19);fontStyle=0;labelBackgroundColor=none;" value="&lt;div&gt;public.ecr.aws/trendmicro/containersecurity/&lt;/div&gt;Cloud-Falco:latest&lt;div&gt;Cloud-Scout:latest&lt;/div&gt;&lt;div&gt;Cloud-Pdig:latest&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="190" x="555" y="154" as="geometry" />
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-13" edge="1" parent="1" source="BWlWesswxzaXjNaTNNdw-9" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#67AB9F;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=light-dark(#000000,#070F19);fontStyle=0;labelBackgroundColor=none;endArrow=none;endFill=0;flowAnimation=1;" target="BWlWesswxzaXjNaTNNdw-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=light-dark(#000000,#070F19);fontStyle=0;labelBackgroundColor=none;" value="&lt;div&gt;aws-accountid/trendmicro/containersecurity/&lt;/div&gt;Cloud-Falco:latest&lt;div&gt;Cloud-Scout:latest&lt;/div&gt;&lt;div&gt;Cloud-Pdig:latest&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="342" x="555" y="419" as="geometry" />
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-17" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=light-dark(#000000,#070F19);fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch_2;fontFamily=CaskaydiaCove Nerd Font;labelBackgroundColor=none;" value="Cloudwatch" vertex="1">
+          <mxGeometry height="78" width="78" x="178" y="566" as="geometry" />
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-18" edge="1" parent="1" source="BWlWesswxzaXjNaTNNdw-17" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=#67AB9F;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=light-dark(#000000,#070F19);fontStyle=0;labelBackgroundColor=none;endArrow=none;endFill=0;flowAnimation=1;" target="BWlWesswxzaXjNaTNNdw-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-19" connectable="0" parent="BWlWesswxzaXjNaTNNdw-18" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=light-dark(#000000,#070F19);fontStyle=0;labelBackgroundColor=default;" value="Log + Debug" vertex="1">
+          <mxGeometry relative="1" y="1" as="geometry">
+            <mxPoint x="1" y="5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="k0TlfemUR5bBmTbeQS8U-8" edge="1" parent="1" source="BWlWesswxzaXjNaTNNdw-2" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#67AB9F;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=light-dark(#000000,#070F19);fontStyle=0;labelBackgroundColor=none;endArrow=none;endFill=0;flowAnimation=1;" target="BWlWesswxzaXjNaTNNdw-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="217" y="344" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="k0TlfemUR5bBmTbeQS8U-9" connectable="0" parent="k0TlfemUR5bBmTbeQS8U-8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=light-dark(#000000,#070F19);fontStyle=0;labelBackgroundColor=default;" value="Pull Image" vertex="1">
+          <mxGeometry relative="1" x="-0.7473" as="geometry">
+            <mxPoint x="-3" y="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-2" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=light-dark(#000000,#070F19);fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;fontFamily=CaskaydiaCove Nerd Font;labelBackgroundColor=none;" value="v1cs-privaterepo-sync" vertex="1">
+          <mxGeometry height="78" width="78" x="178" y="388" as="geometry" />
+        </mxCell>
+        <mxCell id="k0TlfemUR5bBmTbeQS8U-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=CaskaydiaCove Nerd Font;labelBackgroundColor=none;fontColor=light-dark(#000000,#070F19);" value="version control: n-6" vertex="1">
+          <mxGeometry height="30" width="206" x="555" y="383" as="geometry" />
+        </mxCell>
+        <mxCell id="BWlWesswxzaXjNaTNNdw-9" parent="1" style="sketch=0;outlineConnect=0;fontColor=light-dark(#000000,#070F19);gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.endpoints;fontFamily=CaskaydiaCove Nerd Font;labelPosition=center;labelBackgroundColor=none;" value="VPCE (TMEP)" vertex="1">
+          <mxGeometry height="78" width="78" x="178" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="k0TlfemUR5bBmTbeQS8U-11" parent="1" style="rounded=1;arcSize=10;dashed=1;fillColor=none;gradientColor=none;dashPattern=1 1;strokeWidth=2;sketch=0;pointerEvents=1;align=center;verticalAlign=top;fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=light-dark(#000000,#070F19);fontStyle=0;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry height="262" width="479.75" x="406.25" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="k0TlfemUR5bBmTbeQS8U-12" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=#000000;fontStyle=0;labelBackgroundColor=light-dark(#FFFFFF, #f59d56);" value="V1CS AWS Account" vertex="1">
+          <mxGeometry height="30" width="151" x="-125" y="325" as="geometry" />
+        </mxCell>
+        <mxCell id="k0TlfemUR5bBmTbeQS8U-14" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=#000000;fontStyle=0;labelBackgroundColor=light-dark(#FFFFFF, #f59d56);" value="CSVC AWS Account" vertex="1">
+          <mxGeometry height="30" width="151" x="-134" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="k0TlfemUR5bBmTbeQS8U-15" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=CaskaydiaCove Nerd Font;fontSize=12;fontColor=light-dark(#000000,#070F19);fontStyle=0;labelBackgroundColor=default;" value="PUBLIC AWS ECR" vertex="1">
+          <mxGeometry height="30" width="151" x="400" y="43" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

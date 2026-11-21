@@ -1,0 +1,12 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadV1CSPrivateRepoSyncReleases",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::eugene-tenet-publicsharings3/v1cs-privaterepo-sync/releases/*"
+    }
+  ]
+}
