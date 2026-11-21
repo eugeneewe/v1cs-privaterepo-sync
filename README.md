@@ -19,13 +19,15 @@ latest N versions. The Lambda runs **without VPC attachment** (Mode B) — the
 same AWS-managed direct egress path CloudShell uses — so no proxy or VPC
 endpoints are needed.
 
+![Architecture diagram](diagram/v1cs-privaterepo-sync-architecture.gif)
+
 ## Synced images
 
 | Image | Type | Latest tag |
 |---|---|---|
-| `cloud-falco` | OCI multi-arch (amd64 + arm64) | 2.2.6 |
-| `cloud-scout` | OCI multi-arch (amd64 + arm64) | 2.2.6 |
-| `cloud-pdig` | OCI multi-arch (amd64 + arm64) | 2.2.6 |
+| `cloud-falco` | OCI multi-arch (amd64 + arm64) | 2.2.15 |
+| `cloud-scout` | OCI multi-arch (amd64 + arm64) | 2.2.15 |
+| `cloud-pdig` | OCI multi-arch (amd64 + arm64) | 2.2.15 |
 | `cloud-scan-job` | OCI multi-arch (amd64 + arm64) | 2.2.15 |
 
 Source: `public.ecr.aws/trendmicro/container-security/{image}`
