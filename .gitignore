@@ -16,16 +16,8 @@
 .env
 *.env
 
-# AI session debug logs (not project documentation)
-.learnings/
-
 # Internal working documents (not for public repo)
-AGENTS.md
-memory.md
-DESIGN.md
-BOM-no-vpc-pilot.md
-cr-runbook/
-v1cs-privaterepo-IaC/
+_internal/
 
 # Lambda build artifacts (packaged by release script, not source)
 lambda/artifacts/
